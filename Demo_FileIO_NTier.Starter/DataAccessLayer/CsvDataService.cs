@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using Demo_FileIO_NTier.Models;
 
 namespace Demo_FileIO_NTier.Starter.DataAccessLayer
@@ -18,7 +16,30 @@ namespace Demo_FileIO_NTier.Starter.DataAccessLayer
 
         public IEnumerable<Character> ReadAll()
         {
-            List<string> characters
+            List<string> charactersString = new List<string>();
+            List<Character> characters = new List<Character>();
+
+            try
+            {
+                StreamReader sr = new StreamReader(_dataFilePath);
+                using (sr)
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        charactersString.Add(sr.ReadLine());
+                    }
+                    foreach (string characterString in charactersString)
+                    {
+                        characters.Add(CharacterObjectBuilder(characterString));
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return characters;
         }
 
         public void WriteAll(IEnumerable<Character> characters)

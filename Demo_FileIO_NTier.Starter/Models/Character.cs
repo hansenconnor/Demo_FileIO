@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using Demo_FileIO_NTier.DataAccessLayer;
-
-
-namespace Demo_FileIO_NTier.Models
+﻿namespace Demo_FileIO_NTier.Models
 {
     public class Character
     {

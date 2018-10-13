@@ -5,30 +5,69 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Demo_FileIO_NTier.Models;
-
-
+using Newtonsoft.Json;
+using System.Collections;
 
 namespace Demo_FileIO_NTier.Starter.DataAccessLayer
 {
-    class JsonDataService
+    class JsonDataService : IDataService
     {
+ 
         private string _dataFilePath;
 
         public JsonDataService()
         {
-            _dataFilePath = DataSettings.dataFilePath;
+            _dataFilePath = DataSettings.dataFilePathJSON;
         }
 
         public IEnumerable<Character> ReadAll()
         {
             List<Character> characters = new List<Character>();
+            Character jsonCharacterObj;
             string json = File.ReadAllText(_dataFilePath);
 
             try
             {
-                RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(json);
-                characters = rootObject.Characters.Character;
+
+
+                StreamReader sr = new StreamReader(_dataFilePath);
+                using (sr)
+                {
+                    using (JsonReader reader = new JsonTextReader(sr))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+
+                        // read the json from a stream
+                        // json size doesn't matter because only a small piece is read at a time from the HTTP request
+                        // characters = serializer.Deserialize<List<Character>>(reader);
+                        //IList<Character> result = serializer.Deserialize<List<Character>>(reader);
+
+
+                        characters = JsonConvert.DeserializeObject<List<Character>>(json);
+                        //characters.Add(result);
+                    }
+                }
+
+                //RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(json);
+                //characters = rootObject.Characters.Character;
+
+                //var characterObj = JsonConvert.DeserializeObject<Character>(json);
+                //jsonCharacterObj = JsonConvert.DeserializeObject<Character>(json);
+                //foreach (Character characterObj in jsonCharacterObj)
+                //{
+                //    characters.Add(characterObj);
+                //}
+
+
+
+                //var objectToSerialize = new RootObject();
+                //objectToSerialize.items = new List<Character>
+                //          {
+                //             new Character { FirstName = "test1", Age = 22 },
+                //             new Character { FirstName = "test2", Age = 22 }
+                //          };
+
+
             }
             catch (Exception)
             {

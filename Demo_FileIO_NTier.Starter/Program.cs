@@ -28,6 +28,11 @@ namespace Demo_FileIO_NTier
             characterBLL = new CharacterBLL(dataService);
             presenter = new Presenter(characterBLL);
 
+            // Run JSON Serializer
+            dataService = new JsonDataService();
+            characterBLL = new CharacterBLL(dataService);
+            presenter = new Presenter(characterBLL);
+
         }
     }
 }

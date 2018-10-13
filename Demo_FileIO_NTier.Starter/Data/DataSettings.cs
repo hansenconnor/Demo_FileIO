@@ -10,6 +10,6 @@ namespace Demo_FileIO_NTier
     {
         public const string dataFilePath = @"Data\Data.csv";
         public const string dataFilePathXML = @"Data\Data.xml";
-        //public const string dataFilePathJSON = @"Data\Data.json";
+        public const string dataFilePathJSON = @"Data\Data.json";
     }
 }
